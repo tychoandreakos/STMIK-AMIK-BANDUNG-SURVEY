@@ -1,0 +1,8 @@
+[submodule "BACKEND-SMTIK-AMIK-SURVEY"]
+	path = BACKEND-SMTIK-AMIK-SURVEY
+	url = https://github.com/tychoandreakos/BACKEND-SMTIK-AMIK-SURVEY.git
+	branch = master
+[submodule "SURVEY-STMIK-AMIK-BANDUNG"]
+	path = SURVEY-STMIK-AMIK-BANDUNG
+	url = https://github.com/tychoandreakos/SURVEY-STMIK-AMIK-BANDUNG.git
+	branch = master
