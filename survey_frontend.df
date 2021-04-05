@@ -8,14 +8,14 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependecies
-COPY ./SURVEY-STMIK-AMIK-BANDUNG/package.json ./
-COPY ./SURVEY-STMIK-AMIK-BANDUNG/package-lock.json ./ 
+COPY ./SURVEY-STMIK-AMIK-BANDUNG/package*.json ./
+
 #RUN npm install --silent
 ONBUILD RUN apk add g++ make python
 RUN npm install
 
 #add APP
-COPY ./SURVEY-STMIK-AMIK-BANDUNG ./
+# COPY ./SURVEY-STMIK-AMIK-BANDUNG ./
 
 # EXPOSE PORT (REMOVE IF DOCKER-COMPOSE AVAILABLE)
 EXPOSE 3000

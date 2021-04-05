@@ -1,0 +1,55 @@
+version: "3.7"
+services:
+  db:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
+    container_name: db-app
+    #    command: mongod --noauth --smallfiles
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: "${DB_USER}"
+      MONGODB_INITDB_DATABASE: "${DB_NAME}"
+      MONGODB_INITDB_ROOT_PASSWORD: "${DB_PASS}"
+    networks:
+      - survey-net
+
+  client:
+    build:
+      context: ./
+      dockerfile: survey_frontend.df
+    image: stmik-amik-bandung/survey-frontend
+    ports:
+      - 3001:3000
+    container_name: frontend-app
+    restart: always
+    volumes:
+      - ./SURVEY-STMIK-AMIK-BANDUNG:/app
+      - /app/node_modules
+    stdin_open: true
+    networks:
+      - survey-net
+
+  server:
+    build:
+      context: ./
+      dockerfile: survey_backend.df
+    image: stmik-amik-bandung/survey-backend
+    ports:
+      - 9000:80
+    environment:
+      SERVER_PORT: "${SERVER_PORT}"
+    container_name: backend-app
+    restart: unless-stopped
+    volumes:
+      - ./BACKEND-SMTIK-AMIK-SURVEY:/server
+      - /server/node_modules
+    depends_on:
+      - db
+    networks:
+      - survey-net
+
+#  ngrok:
+networks:
+  survey-net:
+    driver: bridge
