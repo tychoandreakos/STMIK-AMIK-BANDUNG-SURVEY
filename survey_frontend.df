@@ -1,0 +1,24 @@
+# pull official base image
+FROM node:12.22.0-alpine
+
+# set working directory
+WORKDIR /app
+
+# add '/app/node_modules/.bin' to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependecies
+COPY ./SURVEY-STMIK-AMIK-BANDUNG/package.json ./
+COPY ./SURVEY-STMIK-AMIK-BANDUNG/package-lock.json ./ 
+#RUN npm install --silent
+ONBUILD RUN apk add g++ make python
+RUN npm install
+
+#add APP
+COPY ./SURVEY-STMIK-AMIK-BANDUNG ./
+
+# EXPOSE PORT (REMOVE IF DOCKER-COMPOSE AVAILABLE)
+EXPOSE 3000
+
+# RUN the app when the container launches
+CMD ["npm", "start"]
