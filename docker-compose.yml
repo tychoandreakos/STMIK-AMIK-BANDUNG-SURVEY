@@ -23,7 +23,7 @@ services:
     container_name: frontend-app
     restart: always
     environment:
-      REACT_APP_BASE_URL_API: http://localhost:9000
+      REACT_APP_BASE_URL_API: ${API_URL}
     volumes:
       - ./SURVEY-STMIK-AMIK-BANDUNG:/app
       - /app/node_modules
@@ -41,11 +41,11 @@ services:
     environment:
       SERVER_PORT: ${SERVER_PORT}
       LIMIT_TRANSFER: ${LIMIT_TRANSFER}
-      CLIENT_URL: http://localhost:3001
+      CLIENT_URL: ${CLIENT_URL}
       ACCESS_TOKEN: ${ACCESS_TOKEN}
-      DB_HOST: ${DB_NAME}
       DB_NAME: ${DB_NAME}
       DB_URI: db
+      DB_HOST: db:27017
     container_name: backend-app
     restart: always
     volumes:
