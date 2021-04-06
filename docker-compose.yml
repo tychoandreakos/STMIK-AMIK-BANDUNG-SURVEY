@@ -6,11 +6,10 @@ services:
     ports:
       - 27017:27017
     container_name: db-app
-    #    command: mongod --noauth --smallfiles
     environment:
-      MONGODB_INITDB_ROOT_USERNAME: "${DB_USER}"
-      MONGODB_INITDB_DATABASE: "${DB_NAME}"
-      MONGODB_INITDB_ROOT_PASSWORD: "${DB_PASS}"
+      MONGODB_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGODB_INITDB_DATABASE: ${DB_NAME}
+      MONGODB_INITDB_ROOT_PASSWORD: ${DB_PASS}
     networks:
       - survey-net
 
@@ -23,6 +22,8 @@ services:
       - 3001:3000
     container_name: frontend-app
     restart: always
+    environment:
+      REACT_APP_BASE_URL_API: http://localhost:9000
     volumes:
       - ./SURVEY-STMIK-AMIK-BANDUNG:/app
       - /app/node_modules
@@ -38,9 +39,15 @@ services:
     ports:
       - 9000:80
     environment:
-      SERVER_PORT: "${SERVER_PORT}"
+      SERVER_PORT: ${SERVER_PORT}
+      LIMIT_TRANSFER: ${LIMIT_TRANSFER}
+      CLIENT_URL: http://localhost:3001
+      ACCESS_TOKEN: ${ACCESS_TOKEN}
+      DB_HOST: ${DB_NAME}
+      DB_NAME: ${DB_NAME}
+      DB_URI: db
     container_name: backend-app
-    restart: unless-stopped
+    restart: always
     volumes:
       - ./BACKEND-SMTIK-AMIK-SURVEY:/server
       - /server/node_modules

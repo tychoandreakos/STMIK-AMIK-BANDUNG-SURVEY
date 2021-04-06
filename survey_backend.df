@@ -1,17 +1,17 @@
 # pull official base image
 FROM node:12.22.0-alpine
 
+# set environment path
+ENV WORKDIR=/server
+
 # Set working directory
-WORKDIR /server
+WORKDIR ${WORKDIR}
 
 # Copcy package.json into the container
-COPY ./BACKEND-SMTIK-AMIK-SURVEY/package*.json /server/
+COPY ./BACKEND-SMTIK-AMIK-SURVEY/package*.json ${WORKDIR}/
 
 # Install dependecies
 RUN npm install
-
-# Copy the current directory contents into the container /api
-# COPY ./BACKEND-SMTIK-AMIK-SURVEY/ /server/
 
 # MAKE port 80 available to the world outside this container
 EXPOSE 80

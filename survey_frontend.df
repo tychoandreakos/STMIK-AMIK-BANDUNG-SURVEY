@@ -1,21 +1,28 @@
 # pull official base image
 FROM node:12.22.0-alpine
 
+# path environment
+ENV WORKDIR=/app
+
 # set working directory
-WORKDIR /app
+WORKDIR ${WORKDIR}
 
 # add '/app/node_modules/.bin' to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH ${WORKDIR}/node_modules/.bin:$PATH
 
 # install app dependecies
 COPY ./SURVEY-STMIK-AMIK-BANDUNG/package*.json ./
 
 #RUN npm install --silent
-ONBUILD RUN apk add g++ make python
-RUN npm install
+#ONBUILD RUN apk add g++ make python
+#RUN npm install
+RUN apk add --no-cache --virtual .gyp \
+        python \
+        make \
+        g++ \
+    && npm install \
+    && apk del .gyp
 
-#add APP
-# COPY ./SURVEY-STMIK-AMIK-BANDUNG ./
 
 # EXPOSE PORT (REMOVE IF DOCKER-COMPOSE AVAILABLE)
 EXPOSE 3000
