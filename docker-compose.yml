@@ -5,7 +5,7 @@ services:
     restart: always
     ports:
       - 27017:27017
-    volume:
+    volumes:
       - ./data/db:/data/db
     container_name: db-app
     environment:
